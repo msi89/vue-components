@@ -1,12 +1,9 @@
 <template>
      <!-- <div class="ui"> -->
          <transition name="fade" appear>
-          <div :class="'ui-alert '+ tclass+' '+position"   v-if="visible" v-bind:style="{ color: color, background: background }">      
-              <div class="ui-alert-title">{{ title }}</div>
-              <div class="ui-alert-message">{{ message }}</div>
-              <br><span class="ui-alert-delai"> Close in {{ time }} second(s) </span>
-              <button @click="toggle" class="ui-button-clear">x</button>          
-        </div>
+          <div class="ui-toast"   v-if="visible" v-bind:style="{ color: color, background: background }">      
+              <div class="ui-toast-message">{{ renderMessage }}</div>      
+          </div>
          </transition>
        
      <!-- </div> -->
@@ -15,39 +12,26 @@
 export default {
     name:'Toast',
     props:{
-        title:{
-            type: String,
-            default:'Hi, toast'
-        }, 
+      
         message:{
             type: String,
             default:'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-        }, 
-        delai:{
-            default:10
-        }, 
-        position:{
-            type: String,
-            default:'top-center'
-        }, 
+        },       
         background:{
             type: String,
-            default:'#F7F7F7'
+            default:'#FFF'
         },        
         color: {
             type: String,
-            default:'#555'
+            default:'gray'
         },        
-        tclass:  {
-            type: String,
-            default:''
-        },
     },
     data (){
         return{
             visible:true,
             timer:'',
-            time: 0,
+            delai: 3,
+            msg:''
         }
     },
     methods:{
@@ -55,14 +39,22 @@ export default {
             this.visible = !this.visible;
         }
     },
+    computed:{
+        renderMessage(){
+            if(this.message.length > 55){
+                return  this.message.substring(0,55)+"...";
+            }
+            return this.msg;           
+        }
+    },
     mounted() {
-        this.time= this.delai;
-      
+       
+        
        this.timer = setInterval(()=>{
-           this.time--;
-              if(this.time == 0){
+           this.delai--;
+              if(this.delai == 0){
                    this.visible = false;
-                   this.time=0;
+                   this.delai=0;
               }
         }, 1000)
     },
@@ -76,114 +68,51 @@ export default {
 
 <style scoped>
 
-.ui-alert{
-    z-index: 100;
+.ui-toast{
+    z-index: 1000;
+    position: absolute;
     width: 400px;
-    min-height: 40px;
+    height: 40px;
     position: absolute;
     padding: 10px;
-    border-radius: .2em;
-    /* background: coral; */
-    margin: 20px auto;
-    position: absolute;
-  
-     /* top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%); */
+    border-radius: .0em;
+    margin: 0px auto; 
+    top: 0;   
+    left: 0;
+    right: 0;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.ui-toast:hover {
+ box-shadow: 0 2px 2px 0 rgba(0,0,0,0.3);
 }
 
 /* On screens that are 600px wide or less, make the columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 700px) {
-  .ui-alert {
+  .ui-toast {
     width: 90%;
-    margin: 10px auto;
+    margin: 0px auto;
   }
 }
 @media screen and (min-width: 701px) {
-  .ui-alert {
+  .ui-toast {
     width: 400px;
-    margin: 10px auto;
+    margin: 0px auto;
+    margin-top: -1px;
   }
 }
-.ui-button-clear {
-  content: "x";
-  color: #fff;
-  width: 20px;
-  height: 20px;
-  vertical-align: baseline;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.2);
-  transition: background 0.3s;
-  border: none;
-  padding-bottom: 2px;
-}
-
-.ui-button-clear:focus {
-  outline: none;
-}
-
-.ui-button-clear:hover {
-  background: rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-}
-.ui-alert  .ui-button-clear{
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 5px 5px 5px 5px;
-}
 
 
-.ui-alert-title{
-   margin-bottom: 5px;
-   margin-right: 5px;
-    /* color: #fff; */
-}
-.ui-alert-message{
-    text-align: justify;
+.ui-toast-message{
+    width: 350px;
+    line-height: 40px;
+    text-align: center;
     font-size: 14px;
-    /* color: #f9f9f9; */
-    font-style: italic;
 }
-.ui-alert-delai{
-    font-size: 12px;
-}
-.ui-alert.top-center {   
-    top: 0;   
-    left: 0;
-    right: 0;
-}
-.ui-alert.top-right {
-     margin-right: 10px;
-     top: 0; 
-     right: 0;
-}
-.ui-alert.top-left {
-     margin-left: 10px;
-     top: 0; 
-     left: 0;
-}
-.ui-alert.bottom-center {   
-    bottom: 0;   
-    left: 0;
-    right: 0;
-}
-.ui-alert.bottom-right {
-     margin-right: 10px;
-     right: 0;
-     bottom: 0;
-}
-.ui-alert.bottom-left {
-     margin-left: 10px;
-     left: 0;
-     bottom: 0;
-}
+
 .fade-enter-active, .fade-leave-active{
-    transition: opacity 1s, transform 1s;
+    transition: opacity 0.5s, transform 0.5s;
 }
 .fade-enter, .fade-leave-active{
     opacity: 0;
