@@ -64,7 +64,13 @@ export default {
        width: 250px;
        min-height: 300px;
          border-radius: 4px;
-         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .06);
+            /* box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .06); */
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+/* -moz-box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+-webkit-box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12); */
+
+
         -webkit-transition: -webkit-box-shadow .2s, -webkit-transform .2s;
          -o-transition: box-shadow .2s, transform .2s, -o-transform .2s;
          transition: box-shadow .2s, transform .2s;
