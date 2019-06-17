@@ -57,7 +57,7 @@ export default {
     },
     computed: {
         trimMessage(){
-             console.log("message length: "+this.message.length)
+           //  console.log("message length: "+this.message.length)
             if(this.message.length > 160){
                 return this.message.substring(0,160)+"...";
             }

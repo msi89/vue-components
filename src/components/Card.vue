@@ -4,9 +4,9 @@
             <img :src="media" />
         </div>
          <div class="card-body">
-            <div class="card-title">{{ renderTitle }}</div>
+            <div class="card-title"  v-bind:style="{ color: color}">{{ renderTitle }}</div>
             <div class="card-desc">{{ renderDesc }}</div>
-             <span v-if="more" class="card-more">more</span>
+             <a :href="url" target="_blank" v-if="more" class="card-more"><span>more</span></a>
          </div>
         
     </div>
@@ -20,12 +20,20 @@ export default {
         },
         title:{
             type: String,
-            default: 'Hello world Lorem ipsum dolor sit amet, his eu ubique'
+            default: 'Hello world Lorem ipsum dolor sit amet'
         },
         description:{
             type: String,
-            default: 'Lorem ipsum dolor sit amet, his eu ubique graeco eruditi, ex civibus sapientem sed, nulla clita laoreet in vel. Ius ut soluta voluptua explicari, ea eos mucius postea. Ei vix patrioque elaboraret'
-        }
+            default: 'Lorem ipsum dolor sit amet, his eu ubique graeco eruditi, ex civibus ue elaboraret'
+        },        
+        color: {
+            type: String,
+            default:'#444'
+        },
+         url:{
+            type: String,
+            default: '#'
+        },
     },
     data(){
        return{
@@ -34,18 +42,16 @@ export default {
     },
     computed: {
         renderDesc(){
-           //  console.log("description length: "+this.description.length)
+        
             if(this.description.length > 100){
+                //  this.more= !this.more;
                 return this.description.substring(0,100)+"...";
             }
             return this.description;
         } ,
          renderTitle(){
-           // console.log("title length: "+this.title.length)
             if(this.title.length > 25){
-                 this.more= !this.more;
-                return this.title.substring(0,25)+"...";
-               
+                return this.title.substring(0,25)+"...";             
             }
             return this.title;
         }    
@@ -56,7 +62,7 @@ export default {
 
 <style scoped>
   .card{
-      box-sizing: content-box;
+       box-sizing: content-box;
        margin: 20px 5px;
        background: #FFF;
        border: 1px solid #eee;
@@ -64,7 +70,7 @@ export default {
        width: 250px;
        min-height: 300px;
          border-radius: 4px;
-            /* box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .06); */
+         /* box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .06); */
 box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 /* -moz-box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
 -webkit-box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
@@ -119,6 +125,8 @@ box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5p
          background: coral;
      }
      .card-more{
+         text-decoration: none;
+
          font-size: 11px;
          padding: 2px 5px;
          border: 1px solid #999;
